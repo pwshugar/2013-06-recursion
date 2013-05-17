@@ -6,4 +6,9 @@
 // But in stead we're going to implement it from scratch:
 var getElementsByClassName = function (className) {
   // your code here
+  var cl = $("'." + className + "'");
+  var arr = [];
+  for (var i = 0, i < cl.length; i++) arr.push(cl[i]);
+  return arr
 };
+
