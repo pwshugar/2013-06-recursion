@@ -2,26 +2,28 @@
 // var stringifyJSON = JSON.stringify;
 
 // but you don't so you're going to have to write it from scratch:
-var stringifyJSON = function (obj) {
-  var objCheck = Object.prototype.toString.call(obj);
-  var arr = [];
-  for (var i = 0; i < obj.length; i++){
-  	if (typeof obj[i] === 'string') arr.push('"' + obj[i] + '"');	
-  	else if (Array.isArray(obj[i])) arr.push("[" + obj[i] + "]");
-  	else if (Object.prototype.toString.call(obj[i])) {
-      
-	else arr.push("" + obj[i]);
+
+
+var arrObject = function(arr) {
+  var resArr = [];
+  for (var i = 0; i < arr.length; i++) {
+    resArr.push(test(arr[i]));
   }
-  return "[" + arr + "]";
+  return "[" + resArr + "]";
 };
 
-
-var test = function(elem) {
-  if (Array.isArray(elem)) return arrObject(elem);
-  else if (Object.prototype.toString.call(obj[i]) === '[object Object]') {
-    return ObjObject(elem);
+var objObject = function(obj) {
+  var keys = [];
+  var objArr = [];
+  var key;
+  var value;
+  for (var k in obj) keys.push(k);
+  for (var i = 0; i < keys.length; i++) {
+    key = test(key[i]);
+    value = test(obj[key[i]]);
+    objArr.push(key + ": " + value);
   }
-  else return notObject(elem);
+  return ("{" + objArr + "}");
 };
 
 var notObject = function(elem) {
@@ -29,16 +31,18 @@ var notObject = function(elem) {
   else return String(elem);
 };
 
-var arrObject = function(arr) {
-  
-};
-
-var objObject = function(obj) {
-  var keys = [];
-  var objArr = [];
-  for (var k in obj) keys.push(k);
-  for (var j = 0; j < keys.length; j++) {
-    objArr.push(keys(j) + ": " + keys.j);
+var test = function(elem) {
+  if (Array.isArray(elem)) return arrObject(elem);
+  else if (Object.prototype.toString.call(elem) === '[object Object]') {
+    return objObject(elem);
   }
-  return ("{" + objArr + "}");
+  else return notObject(elem);
+};
+var stringifyJSON = function (obj) {
+  var objCheck = Object.prototype.toString.call(obj);
+  var finArr = [];
+  for (var i = 0; i < obj.length; i++){
+    finArr.push(test(obj[i]));
+  }
+  return "[" + finArr + "]";
 };
