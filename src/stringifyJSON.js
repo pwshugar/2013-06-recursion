@@ -3,46 +3,34 @@
 
 // but you don't so you're going to have to write it from scratch:
 
+var stringifyJSON = function (obj) {
+  if (Array.isArray(obj)) return arrReturn(obj);
+  else if (obj === null) return "null";
+  else if (typeof obj === 'object') return objReturn(obj);
+  else if (typeof obj === 'number') return "" + obj;
+  else if (typeof obj === 'boolean') return "" + obj;
+  else if (typeof obj === 'string') return '"' + obj + '"';
+  else if (typeof obj === 'undefined') return "";
+};
 
-var arrObject = function(arr) {
+var arrReturn = function(arr) {
   var resArr = [];
   for (var i = 0; i < arr.length; i++) {
-    resArr.push(test(arr[i]));
+    resArr.push(stringifyJSON(arr[i]));
   }
   return "[" + resArr + "]";
 };
 
-var objObject = function(obj) {
+var objReturn = function(obj) {
   var keys = [];
   var objArr = [];
   var key;
   var value;
   for (var k in obj) keys.push(k);
   for (var i = 0; i < keys.length; i++) {
-    key = test(key[i]);
-    value = test(obj[key[i]]);
+    key = stringifyJSON(key[i]);
+    value = stringifyJSON(obj[key[i]]);
     objArr.push(key + ": " + value);
   }
   return ("{" + objArr + "}");
-};
-
-var notObject = function(elem) {
-  if (typeof elem === 'string') return ('"' + elem + '"');
-  else return String(elem);
-};
-
-var test = function(elem) {
-  if (Array.isArray(elem)) return arrObject(elem);
-  else if (Object.prototype.toString.call(elem) === '[object Object]') {
-    return objObject(elem);
-  }
-  else return notObject(elem);
-};
-var stringifyJSON = function (obj) {
-  var objCheck = Object.prototype.toString.call(obj);
-  var finArr = [];
-  for (var i = 0; i < obj.length; i++){
-    finArr.push(test(obj[i]));
-  }
-  return "[" + finArr + "]";
 };
