@@ -11,12 +11,15 @@ var getElementsByClassName = function(className){
   
   var iterate = function(node) {
     if (node.classList.contains(className)) returnArr.push(node);
-      if (node.childNodes.length > 0) {
-  	    for (var i = 0; i < node.childNodes.length; i++) {
-  	      iterate(node.childNodes[i]);
+      if (node.hasChildNodes) {
+        node = node.firstChild;
+        while (node) {
+          iterate(node);
+          node = node.nextSibling;
   	    }
       }
     };
 
   return returnArr;
 };
+
