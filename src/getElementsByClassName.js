@@ -7,10 +7,11 @@
 
 var getElementsByClassName = function(className){
   var returnArr = [];
-  iterate(document.body);
   
   var iterate = function(node) {
-    if (node.classList.contains(className)) returnArr.push(node);
+    if (node.classList){
+      if (node.classList.contains(className)) returnArr.push(node);
+    }
       if (node.hasChildNodes) {
         node = node.firstChild;
         while (node) {
@@ -20,6 +21,6 @@ var getElementsByClassName = function(className){
       }
     };
 
+  iterate(document.body);
   return returnArr;
 };
-
